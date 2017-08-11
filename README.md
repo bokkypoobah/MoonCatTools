@@ -1,8 +1,67 @@
+# MoonCat Tools
 
+See MoonCat Rescue at [https://mooncatrescue.com/](https://mooncatrescue.com/) for details on rescuing and adopting MoonCats.
 
+Load the URL above in Chrome with MetaMask (I recommend against using Chrome) or the Mist browser.
 
+## Find Cats
+
+In your browser, click on "FIND CATS". Search for "helpless adorable cats..." . You should find a "seed" in several minutes.
+
+## Rescue Cat
+
+In your Ethereum Wallet screen (of Mist), Watch Contract:
+
+* Address: [0x60cd862c9C687A9dE49aecdC3A99b74A4fc54aB6](https://etherscan.io/address/0x60cd862c9C687A9dE49aecdC3A99b74A4fc54aB6#code)
+* Name: MoonCat
+* ABI: Get the ABI from EtherScan
+
+The click on your MoonCat contract:
+
+* Select function "Rescue Cat"
+* Enter the "seed" you found from the previous section
+* Select your account and execute the transaction
+
+## Rescue Cat From Geth Console
+
+Unlock your account in `geth console`:
+
+    > personal.unlockAccount("{your account}", "{your password}");
+
+Send a transaction to execute the `rescueCat(...)` function:
+
+    > eth.sendTransaction({from: eth.accounts[0], to: "0x60cd862c9C687A9dE49aecdC3A99b74A4fc54aB6", gasPrice: web3.toWei(2, "gwei"), gas: 150000, data: "0x4946e206" + "{your seed without the 0x}"})
+
+## Name Your Cat
+
+You will have to find your cat's `catId` - see the script below
+
+Execute the function `nameCat(...)` with your `catId` and the hex of your cat's name.
+
+To find the hex of your cat's name, in `geth console`:
+
+    > web3.toHex("Ho Hum")
+    "0x486f2048756d"
+
+## Offer You Cat For Sale
+
+Execute the function `makeAdoptionOffer(...)` with your *catId* and your price in wei.
+
+<br />
+
+<hr />
+
+# MoonCat Tools
+
+See [scripts/getMooncatData.sh](scripts/getMooncatData.sh).
+
+<br />
+
+<hr />
 
 # MoonCat Contract Source Code
+
+From [0x60cd862c9C687A9dE49aecdC3A99b74A4fc54aB6](https://etherscan.io/address/0x60cd862c9C687A9dE49aecdC3A99b74A4fc54aB6#code), MoonCat's source code:
 
 ```javascript
 pragma solidity ^0.4.13;
@@ -337,3 +396,5 @@ contract MoonCatRescue {
 
 }
 ```
+
+(c) BokkyPooBah / Bok Consulting Pty Ltd - Aug 11 2017. The MIT Licence.
